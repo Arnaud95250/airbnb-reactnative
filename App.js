@@ -9,6 +9,7 @@ import ProfileScreen from "./containers/ProfileScreen";
 import SignInScreen from "./containers/SignInScreen";
 import SignUpScreen from "./containers/SignUpScreen";
 import SettingsScreen from "./containers/SettingsScreen";
+import FlatListScreen from "./containers/FlatListScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -42,6 +43,10 @@ export default function App() {
     bootstrapAsync();
   }, []);
 
+
+
+
+
   return (
     <NavigationContainer>
       {isLoading ? null : userToken === null ? ( // We haven't finished checking for the token yet
@@ -68,6 +73,8 @@ export default function App() {
                   inactiveTintColor: "gray",
                 }}
               >
+
+
                 <Tab.Screen
                   name="Home"
                   options={{
@@ -101,6 +108,9 @@ export default function App() {
                     </Stack.Navigator>
                   )}
                 </Tab.Screen>
+
+
+
                 <Tab.Screen
                   name="Settings"
                   options={{
@@ -125,6 +135,9 @@ export default function App() {
                     </Stack.Navigator>
                   )}
                 </Tab.Screen>
+                
+                <Tab.Screen name="FlatList" component={FlatListScreen} />
+
               </Tab.Navigator>
             )}
           </Stack.Screen>
