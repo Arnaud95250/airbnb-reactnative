@@ -9,7 +9,7 @@ import ProfileScreen from "./containers/ProfileScreen";
 import SignInScreen from "./containers/SignInScreen";
 import SignUpScreen from "./containers/SignUpScreen";
 import SettingsScreen from "./containers/SettingsScreen";
-import FlatListScreen from "./containers/FlatListScreen";
+import RoomScreen from "./containers/RoomScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -58,6 +58,10 @@ export default function App() {
           <Stack.Screen name="SignUp">
             {() => <SignUpScreen setToken={setToken} />}
           </Stack.Screen>
+          {/* <Stack.Screen name="Room">
+            {() => <RoomScreen setToken={setToken}  />}
+          </Stack.Screen> */}
+          
         </Stack.Navigator>
       ) : (
         // User is signed in
@@ -97,6 +101,12 @@ export default function App() {
                         {() => <HomeScreen />}
                       </Stack.Screen>
 
+                      <Stack.Screen name="Room">
+                        {() => <RoomScreen />}
+                      </Stack.Screen>
+
+
+                      {/* Button Profil en bas de l'écran  */}  
                       <Stack.Screen
                         name="Profile"
                         options={{
@@ -109,8 +119,7 @@ export default function App() {
                   )}
                 </Tab.Screen>
 
-
-
+                {/* Button Setting en bas de l'écran  */}
                 <Tab.Screen
                   name="Settings"
                   options={{
@@ -136,7 +145,7 @@ export default function App() {
                   )}
                 </Tab.Screen>
                 
-                <Tab.Screen name="FlatList" component={FlatListScreen} />
+                {/* <Tab.Screen name="RoomScreen" component={RoomScreen} /> */}
 
               </Tab.Navigator>
             )}
