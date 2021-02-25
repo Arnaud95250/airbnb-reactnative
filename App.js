@@ -4,12 +4,16 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
+import { Feather } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 import HomeScreen from "./containers/HomeScreen";
 import ProfileScreen from "./containers/ProfileScreen";
 import SignInScreen from "./containers/SignInScreen";
 import SignUpScreen from "./containers/SignUpScreen";
 import SettingsScreen from "./containers/SettingsScreen";
 import RoomScreen from "./containers/RoomScreen";
+import AroundMeScreen from "./containers/AroundMeScreen";
+
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -17,6 +21,7 @@ const Stack = createStackNavigator();
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [userToken, setUserToken] = useState(null);
+  const [userId, setUserId] = useState(null);
 
   const setToken = async (token) => {
     if (token) {
@@ -26,6 +31,15 @@ export default function App() {
     }
 
     setUserToken(token);
+  };
+
+  const setId = async (id) => {
+    if (id) {
+      AsyncStorage.setItem("userId", id);
+    } else {
+      AsyncStorage.removeItem("userId");
+    }
+    setUserId(id);
   };
 
   useEffect(() => {
@@ -53,10 +67,10 @@ export default function App() {
         // No token found, user isn't signed in
         <Stack.Navigator>
           <Stack.Screen name="SignIn" options={{ animationEnabled: false }}>
-            {() => <SignInScreen setToken={setToken} />}
+            {() => <SignInScreen setToken={setToken} setId={setId}/>}
           </Stack.Screen>
           <Stack.Screen name="SignUp">
-            {() => <SignUpScreen setToken={setToken} />}
+            {() => <SignUpScreen setToken={setToken} setId={setId} />}
           </Stack.Screen>
           {/* <Stack.Screen name="Room">
             {() => <RoomScreen setToken={setToken}  />}
@@ -77,7 +91,6 @@ export default function App() {
                   inactiveTintColor: "gray",
                 }}
               >
-
 
                 <Tab.Screen
                   name="Home"
@@ -106,6 +119,8 @@ export default function App() {
                       </Stack.Screen>
 
 
+
+
                       {/* Button Profil en bas de l'écran  */}  
                       <Stack.Screen
                         name="Profile"
@@ -113,7 +128,58 @@ export default function App() {
                           title: "User Profile",
                         }}
                       >
-                        {() => <ProfileScreen />}
+                        {() => <ProfileScreen 
+                                    setToken={setToken} 
+                                    setId={setId} 
+                        />}
+                      </Stack.Screen>
+                    </Stack.Navigator>
+                  )}
+                </Tab.Screen>
+
+
+                        {/* Button Map en bas de l'écran  */}
+                <Tab.Screen
+                  name="Around"
+                  options={{
+                    tabBarLabel: "Map",
+                    tabBarIcon: ({ color, size }) => (
+                      <Feather name="map-pin" size={size} color={color} />
+                    ),
+                  }}
+                >
+                  {() => (
+                    <Stack.Navigator>
+                      <Stack.Screen
+                        name="Around"
+                        options={{ title: "Around", tabBarLabel: "Around" }}
+                      >
+                        {() => <AroundMeScreen setToken={setToken} />}
+                      </Stack.Screen>
+                    </Stack.Navigator>
+                  )}
+                </Tab.Screen>
+
+                {/* Button Setting en bas de l'écran  */}
+                <Tab.Screen
+                  name="Profile"
+                  options={{
+                    tabBarLabel: "Profile",
+                    tabBarIcon: ({ color, size }) => (
+                      <AntDesign 
+                        name="user" 
+                        size={size} 
+                        color={color} />
+                    ),
+                  }}
+                >
+                  {() => (
+                    <Stack.Navigator>
+                      <Stack.Screen
+                        name="Profile"
+                        options={{ title: "Profile", tabBarLabel: "Profile" }}
+                      >
+                        {() => <ProfileScreen setToken={setToken} setId={setId} />}
                       </Stack.Screen>
                     </Stack.Navigator>
                   )}
@@ -144,10 +210,8 @@ export default function App() {
                     </Stack.Navigator>
                   )}
                 </Tab.Screen>
-                
-                {/* <Tab.Screen name="RoomScreen" component={RoomScreen} /> */}
-
               </Tab.Navigator>
+              
             )}
           </Stack.Screen>
         </Stack.Navigator>

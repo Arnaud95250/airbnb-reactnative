@@ -20,6 +20,7 @@ function RoomScreen({setToken}) {
   useEffect(() => {
     const fetchData = async () => {
         try{  
+            console.log("toto0000");
             const response = await axios.get(`https://express-airbnb-api.herokuapp.com/rooms/${route.params.roomId}`);
             console.log(response.data.title);
             setData(response.data)
@@ -99,6 +100,7 @@ function RoomScreen({setToken}) {
                             latitudeDelta: 0.1,
                             longitudeDelta: 0.1,
                         }}
+                        showUserLocation={true}
                         >
                         <MapView.Marker
                             title={data.title}
@@ -115,7 +117,6 @@ function RoomScreen({setToken}) {
 }
   
 export default RoomScreen;
-
   
 const styles = StyleSheet.create({
     room:{
@@ -137,13 +138,6 @@ const styles = StyleSheet.create({
         height:75,
         borderRadius: 100
       },
-    //   content_logo: {
-    //     borderBottomWidth: 2, 
-    //     borderColor: "#FF5A5F", 
-    //     width:"100%", 
-    //     aligndatas: "center", 
-    //     height: 50
-    //   },
     logo:{
         width: 50,
         height: 50,
@@ -207,50 +201,3 @@ const styles = StyleSheet.create({
           top:170,
       }
 });
-
-
-
-//   {isLoading ? (
-    //     <ActivityIndicator style={{marginTop: 150}} size="large" color="#FF5A5F" />
-    // ) : (
-        // <View
-        //     data={data}
-        //     renderdata={({ item }) => {
-            //         console.log(item);
-            //         return (
-                //         <View>
-                //             <Text>{data.photos}</Text>
-                //         </View>
-                
-                //         <ScrollView horizontal={true}> 
-                //             <View style={styles.content_img}> 
-                //                 {item.photos.map((img, index) => {
-                    //                 // console.log(img.url);
-                    //                 return( 
-//                     <Image style={styles.img} source={{ uri:img.url}}/>
-//                     )
-//                 })} 
-//             </View> 
-//         </ScrollView> 
-//         )
-//     }}
-//     keyExtractor={(item) => item._id}
-//     >
-// </View>
-// )}
-
-
-
-
-{/* <ScrollView horizontal={true}>
-    <View style={styles.content_img}> 
-    {data.photos.map((img, index) => {
-        // console.log(img.url);
-        return( 
-             
-            <Image style={styles.img} source={{ uri:img.url}}/>
-            
-            )
-        })} 
-    </View> 
-    </ScrollView> */}

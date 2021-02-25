@@ -2,6 +2,8 @@ import React, {useState} from "react";
 import { useNavigation } from "@react-navigation/core";
 import { Button, Text, TextInput, View, StyleSheet,TouchableOpacity, Image, ScrollView,KeyboardAvoidingView } from "react-native";
 import axios from 'axios';
+import Input from '../components/Input';
+import InputTexarea from '../components/InputTexarea';
 
 export default function SignUpScreen({ setToken }) {
   const navigation = useNavigation();
@@ -49,71 +51,60 @@ export default function SignUpScreen({ setToken }) {
           <Text style={styles.title}>Inscription</Text>
 
           {/*Input Email*/}
-          <TextInput 
-            style={styles.inputText} 
-            onChangeText={(event) => {setEmail(event)}}
-            placeholder="Email"
-            placeholderTextColor="#FF5A5F" 
-            value={email}
-            maxLength={64}
-            textContentType="emailAddress"
-            >
-          </TextInput>
+          <Input
+              setFunction={setEmail} 
+              placeholder="email" 
+              value={email}
+              maxLength={64}
+              textContentType="emailAddress"
+              >
+          </Input> 
           {console.log(email)}
 
           {/*Input Name*/}
-          <TextInput 
-            style={styles.inputText} 
-            onChangeText={(event) => {setName(event)}}
-            placeholder="Name" 
-            placeholderTextColor="#FF5A5F"
+          <Input 
+            setFunction={setName} 
+            placeholder="name" 
             value={name}
             maxLength={64}
             textContentType="name"
-            >
-          </TextInput>
+          >
+          </Input> 
           {console.log(name)}
 
           {/*Input Déscription*/}
-          <TextInput 
-            style={styles.input_texarea} 
-            onChangeText={(event) => {setDescription(event)}}
+          <InputTexarea 
+            setFunction={setDescription} 
             placeholder="description"
             placeholderTextColor="#FF5A5F"
             value={description}
             maxLength={256}
-            multiline={true}
-            numberOfLines={5} 
-            
-            textContentType="password">
-          </TextInput>
+            >
+          </InputTexarea>
           {console.log(description)}
 
           {/*Input password*/}
-          <TextInput 
-            style={styles.inputText}
-            onChangeText={(event) => {setPassword(event)}} 
-            placeholder="Password" 
-            placeholderTextColor="#FF5A5F"
+          <Input
+            setFunction={setPassword} 
+            placeholder="password" 
             value={password}
-            maxLength={64}
+            maxLength={256}
             secureTextEntry={true}
-            textContentType="password"
-            >
-          </TextInput>
+            textContentType={password}
+          >
+          </Input> 
           {console.log(password)}
 
           {/*Input confirm password*/}
-          <TextInput 
-            style={styles.inputText} 
-            onChangeText={(confirmPassword) => {setConfirmPassword(confirmPassword)}}
+          <Input
+            setFunction={setConfirmPassword} 
             placeholder="Confirmé votre mot-de-passe" 
-            placeholderTextColor="#FF5A5F"
-            maxLength={64}
+            maxLength={256}
             secureTextEntry={true}
-            textContentType="password"
+            textContentType={password}
             >
-          </TextInput>
+          </Input> 
+          {console.log(confirmPassword)}
 
           {/*Button Submit formulaire active function createUser*/}
           <TouchableOpacity
@@ -151,26 +142,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     color: "#767676" 
   },
-  inputText:{
-    borderColor: "#FF5A5F",
-    opacity: 0.4,
-    borderBottomWidth: 1,
-    padding: 10,
-    width: "70%",
-    marginBottom: 20
-  },
-  input_texarea:{
-    borderColor: "#FF5A5F",
-    borderWidth: 1,
-    width: "70%",
-    opacity: 0.4,
-    borderTopLeftRadius: 5,
-    borderTopRightRadius: 5,
-    borderBottomRightRadius: 5,
-    borderBottomLeftRadius: 5,
-    padding:10,
-    margin:10
-  },
+  
   button_submit:{
     fontSize:20,
     lineHeight: 50,

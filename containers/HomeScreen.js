@@ -3,8 +3,10 @@ import { View, Text, FlatList, StyleSheet, Image, ScrollView,TouchableOpacity, A
 import { useState, useEffect } from "react";
 import axios from 'axios';
 import { useNavigation } from "@react-navigation/core";
-
 import { FontAwesome } from '@expo/vector-icons';
+
+// Components
+import Logo from "../components/Logo";
 
 function HomeScreen({setToken}) {
 
@@ -12,6 +14,21 @@ function HomeScreen({setToken}) {
   const navigation = useNavigation();
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
+
+
+  const displayStars = (ratingValue) => {
+    const tab = [];
+
+    for (let i = 1; i <= 5; i++) {
+      if (ratingValue >= i) {
+        tab.push( <FontAwesome name="star" size={20} color="rgb(255, 177, 1)" key={i} />);
+      } else {
+        tab.push( <FontAwesome name="star-o" size={20} color="rgb(255, 177, 1)" key={i} />);
+      }
+    }
+
+    return tab;
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,9 +48,7 @@ function HomeScreen({setToken}) {
   return (
     
     <View style={styles.home}>
-      <View style={styles.content_logo}>
-        <Image source={require('../assets/logo0.png')} style={styles.logo}></Image>
-      </View>
+      <Logo/>
 
       {isLoading ? (
           <ActivityIndicator style={{marginTop: 150}} size="large" color="#FF5A5F" />
@@ -54,11 +69,7 @@ function HomeScreen({setToken}) {
                             
                             <Text style={styles.title} numberOfLines={1}>{item.title}</Text>
                             <View style={{flexDirection:"row", justifyContent: "space-between", width: 200, alignItems: "center", height:40}}>
-                              <FontAwesome name="star" size={20} color="rgb(255, 177, 1)" />
-                              <FontAwesome name="star" size={20} color="rgb(255, 177, 1)" />
-                              <FontAwesome name="star" size={20} color="rgb(255, 177, 1)" />
-                              <FontAwesome name="star" size={20} color="rgb(255, 177, 1)" />
-                              <FontAwesome name="star-o" size={20} color="rgb(255, 177, 1)"/>
+                            {displayStars(item.ratingValue)}
                               <View style={{height:30}}>
                                 <Text style={styles.reviews}>{item.reviews} reviews</Text>
                               </View>
